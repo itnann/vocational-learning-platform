@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>yaojiuye-plus-parent</artifactId>
+        <groupId>com.yaojiuye</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../yaojiuye-plus-parent</relativePath>
+    </parent>
+
+    <artifactId>yaojiuye-plus-content</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>yaojiuye-plus-content-api</module>
+        <module>yaojiuye-plus-content-service</module>
+        <module>yaojiuye-plus-content-model</module>
+    </modules>
+
+</project>

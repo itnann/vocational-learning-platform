@@ -1,0 +1,26 @@
+package com.yaojiuye;
+
+import com.spring4all.swagger.EnableSwagger2Doc;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+/**
+ * <p>
+ *     系统管理启动类
+ * </p>
+ *
+ * @Description:
+ */
+@EnableScheduling
+@EnableSwagger2Doc
+@SpringBootApplication
+@Slf4j
+public class SystemApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SystemApplication.class,args);
+        log.info("System server started");
+    }
+}
