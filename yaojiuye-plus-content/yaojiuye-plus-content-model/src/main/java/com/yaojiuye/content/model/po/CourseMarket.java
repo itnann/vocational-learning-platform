@@ -28,7 +28,7 @@ public class CourseMarket implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键，课程id")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
     @ApiModelProperty(value = "收费规则，对应数据字典")

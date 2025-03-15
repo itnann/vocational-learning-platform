@@ -2,6 +2,9 @@ package com.yaojiuye.content.service;
 
 import com.yaojiuye.base.model.PageParams;
 import com.yaojiuye.base.model.PageResult;
+import com.yaojiuye.content.model.dto.AddCourseDto;
+import com.yaojiuye.content.model.dto.CourseBaseInfoDto;
+import com.yaojiuye.content.model.dto.EditCourseDto;
 import com.yaojiuye.content.model.dto.QueryCourseParamsDto;
 import com.yaojiuye.content.model.po.CourseBase;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -22,6 +25,31 @@ public interface ICourseBaseService extends IService<CourseBase> {
      * @param queryCourseParamsDto
      * @return
      */
-    public PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto);
+    PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto);
+
+    /**
+     * @description 添加课程基本信息
+     * @param companyId  教学机构id
+     * @param addCourseDto  课程基本信息
+     * @return
+     */
+    CourseBaseInfoDto createCourseBase(Long companyId, AddCourseDto addCourseDto);
+
+    /**
+     * @description 根据课程id查询课程信息
+     * @param courseId
+     * @return
+     */
+    CourseBaseInfoDto getCourseBaseInfo(Long courseId);
+
+
+    /**
+     * @description 修改课程信息
+     * @param companyId  机构id
+     * @param editCourseDto  课程信息
+     * @return com.yaojiuye.content.model.dto.CourseBaseInfoDto
+     * @author itnan
+     */
+    CourseBaseInfoDto updateCourseBase(Long companyId, EditCourseDto editCourseDto);
 
 }
