@@ -187,7 +187,6 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         if (!update_CourseBase) {
             GlobalException.cast("更新课程基本信息失败");
         }
-        //TODO
         //更新课程营销信息,先删除课程营销信息，再插入课程营销信息
         CourseMarket courseMarket = new CourseMarket();
         LambdaQueryWrapper<CourseMarket> wrapper = new LambdaQueryWrapper<>();
