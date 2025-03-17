@@ -40,7 +40,7 @@ public class CourseBaseInfoController {
     @PostMapping("/course")
     public CourseBaseInfoDto createCourseBase(@RequestBody @Validated(ValidationGroups.Inster.class) AddCourseDto addCourseDto){
         //机构id，由于认证系统没有上线暂时硬编码
-        //TODO
+        //TODO 获取当前机构id
         Long companyId = 1232141425L;
         return courseBaseService.createCourseBase(companyId,addCourseDto);
     }
@@ -55,7 +55,7 @@ public class CourseBaseInfoController {
     @PutMapping("/course")
     public CourseBaseInfoDto modifyCourseBase(@RequestBody @Validated(ValidationGroups.Update.class)EditCourseDto editCourseDto){
         //机构id，由于认证系统没有上线暂时硬编码
-        //TODO
+        //TODO 获取当前机构id
         Long companyId = 1232141425L;
         return courseBaseService.updateCourseBase(companyId,editCourseDto);
     }

@@ -5,11 +5,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.yaojiuye.base.exception.ValidationGroups;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -32,15 +37,19 @@ public class CourseTeacher implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    @NotNull(message = "课程标识不能为空")
     @ApiModelProperty(value = "课程标识")
     private Long courseId;
 
+    @NotEmpty(message = "教师标识不能为空")
     @ApiModelProperty(value = "教师标识")
     private String teacherName;
 
+    @NotEmpty(message = "教师职位不能为空")
     @ApiModelProperty(value = "教师职位")
     private String position;
 
+    @NotEmpty(message = "教师简介不能为空")
     @ApiModelProperty(value = "教师简介")
     private String introduction;
 

@@ -13,4 +13,20 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICourseTeacherService extends IService<CourseTeacher> {
 
+
+
+    /**
+     * 删除课程-教师关系
+     * @param companyId
+     * @param id
+     */
+    void deleteCourseTeacher(Long companyId, Long id);
+
+    /**
+     * 保存或更新课程-教师关系
+     * @param companyId
+     * @param courseTeacher
+     * @return
+     */
+    CourseTeacher saveOrUpdateCourseTeacher(Long companyId, CourseTeacher courseTeacher);
 }
