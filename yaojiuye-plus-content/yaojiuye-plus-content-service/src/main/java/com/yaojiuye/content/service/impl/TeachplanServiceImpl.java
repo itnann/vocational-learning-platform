@@ -110,8 +110,7 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
         //2.如果小章节则删除随之绑定的媒资资源也得删除
         lambdaUpdate().eq(Teachplan::getId, id).remove();
         //删除媒资资源
-        LambdaQueryWrapper<TeachplanMedia> wrapper = new LambdaQueryWrapper<>();
-        teachplanMediaMapper.delete(wrapper.eq(TeachplanMedia::getTeachplanId, id));
+        teachplanMediaMapper.delete(new LambdaQueryWrapper<TeachplanMedia>().eq(TeachplanMedia::getTeachplanId, id));
     }
 
     @Override

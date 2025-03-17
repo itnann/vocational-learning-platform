@@ -34,7 +34,7 @@ public class CourseTeacherController {
 
     @ApiOperation("添加课程老师")
     @PostMapping("/courseTeacher")
-    public CourseTeacher saveOoUpdate(@RequestBody  @Validated CourseTeacher courseTeacher) {
+    public CourseTeacher saveOrUpdate(@RequestBody  @Validated CourseTeacher courseTeacher) {
         // todo 获取当前登录用户id
         Long companyId = 1232141425L;
         return courseTeacherService.saveOrUpdateCourseTeacher(companyId, courseTeacher);

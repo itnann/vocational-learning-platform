@@ -7,15 +7,12 @@ import com.yaojiuye.base.exception.CommonError;
 import com.yaojiuye.base.exception.GlobalException;
 import com.yaojiuye.base.model.PageParams;
 import com.yaojiuye.base.model.PageResult;
-import com.yaojiuye.content.mapper.CourseCategoryMapper;
-import com.yaojiuye.content.mapper.CourseMarketMapper;
+import com.yaojiuye.content.mapper.*;
 import com.yaojiuye.content.model.dto.AddCourseDto;
 import com.yaojiuye.content.model.dto.CourseBaseInfoDto;
 import com.yaojiuye.content.model.dto.EditCourseDto;
 import com.yaojiuye.content.model.dto.QueryCourseParamsDto;
-import com.yaojiuye.content.model.po.CourseBase;
-import com.yaojiuye.content.mapper.CourseBaseMapper;
-import com.yaojiuye.content.model.po.CourseMarket;
+import com.yaojiuye.content.model.po.*;
 import com.yaojiuye.content.service.ICourseBaseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +42,14 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
     private final CourseMarketMapper courseMarketMapper;
 
     private final CourseCategoryMapper courseCategoryMapper;
+
+    private final TeachplanMapper teachplanMapper;
+
+    private final TeachplanMediaMapper teachplanMediaMapper;
+
+    private final CourseTeacherMapper courseTeacherMapper;
+
+
 
 
     /**
@@ -195,5 +200,38 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
         saveCourseMarket(courseMarket);
         //返回课程基本信息
         return getCourseBaseInfo(editCourseDto.getId());
+    }
+
+    /**
+     * @param courseId
+     * @description 删除课程信息 其中关联的课程营销信息,课程计划,课程计划关联的媒资信息,课程教师都得删除
+     */
+    @Override
+    @Transactional
+    public void deleteCourseBase(Long courseId) {
+        //先判断该课程计划是否存在 并且课程审核状态为未提交
+        CourseBase courseBase = courseBaseMapper.selectOne(new LambdaQueryWrapper<CourseBase>().eq(CourseBase::getId, courseId).eq(CourseBase::getAuditStatus, "202002"));
+        if (courseBase == null) {
+            GlobalException.cast("课程不存在");
+        }
+        //删除课程基本信息
+        boolean delete_CourseBase = lambdaUpdate().eq(CourseBase::getId, courseId).remove();
+        if (!delete_CourseBase) {
+            GlobalException.cast("删除课程基本信息失败");
+        }
+        //删除课程营销信息
+        boolean delete_CourseMarket = courseMarketMapper.deleteById(courseId) > 0;
+        if (!delete_CourseMarket) {
+            GlobalException.cast("删除课程营销信息失败");
+        }
+        //删除课程计划信息
+       teachplanMapper.delete(new LambdaQueryWrapper<Teachplan>().eq(Teachplan::getCourseId, courseId));
+
+        //删除课程计划关联的媒资信息
+        teachplanMediaMapper.delete(new LambdaQueryWrapper<TeachplanMedia>().eq(TeachplanMedia::getCourseId, courseId));
+
+        //删除课程教师信息
+        courseTeacherMapper.delete(new LambdaQueryWrapper<CourseTeacher>().eq(CourseTeacher::getCourseId, courseId));
+
     }
 }

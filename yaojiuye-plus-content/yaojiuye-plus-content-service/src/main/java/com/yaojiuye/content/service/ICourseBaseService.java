@@ -52,4 +52,10 @@ public interface ICourseBaseService extends IService<CourseBase> {
      */
     CourseBaseInfoDto updateCourseBase(Long companyId, EditCourseDto editCourseDto);
 
+    /**
+     * @description 删除课程信息 其中关联的课程营销信息,课程计划,课程计划关联的媒资信息,课程教师都得删除
+     * @param courseId
+     */
+    void deleteCourseBase(Long courseId);
+
 }
