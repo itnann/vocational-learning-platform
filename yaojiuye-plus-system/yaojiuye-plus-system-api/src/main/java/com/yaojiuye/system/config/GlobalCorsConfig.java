@@ -8,7 +8,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 /**
- * [解决跨域问题]
+ * [解决跨域问题 用网关之后这个不需要啦]
  *
  * @author : [itnan]
  * @version : [v1.0]

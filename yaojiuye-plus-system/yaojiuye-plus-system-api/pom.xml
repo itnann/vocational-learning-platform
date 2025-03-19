@@ -23,6 +23,16 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- nacos http协议就不用将这个service上报到nacos,dubbo使用rpc协议需要将service也上报到nacos-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
         <!--cloud的基础环境包-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

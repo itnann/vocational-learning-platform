@@ -3,20 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>yaojiuye-plus-content</artifactId>
+        <artifactId>yaojiuye-plus-media</artifactId>
         <groupId>com.yaojiuye</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>yaojiuye-plus-content-api</artifactId>
-
+    <artifactId>yaojiuye-plus-media-api</artifactId>
+    <name>yaojiuye-plus-media-api</name>
+    <description>yaojiuye-plus-media-api</description>
 
     <dependencies>
-        <dependency>
-            <groupId>com.yaojiuye</groupId>
-            <artifactId>yaojiuye-plus-content-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <!-- nacos http协议就不用将这个service上报到nacos,dubbo使用rpc协议需要将service也上报到nacos-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -25,18 +20,53 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.yaojiuye</groupId>
+            <artifactId>yaojiuye-plus-media-model</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yaojiuye</groupId>
+            <artifactId>yaojiuye-plus-media-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!--cloud的基础环境包-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-context</artifactId>
         </dependency>
+
         <!-- Spring Boot 的 Spring Web MVC 集成 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!-- Spring Boot 对 LocalDateTime
+          boot-starter-web自动引入
+          -->
+       <!-- <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>-->
 
+        <!--<dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>-->
         <!-- 排除 Spring Boot 依赖的日志包冲突 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,10 +78,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
+
         <!-- Spring Boot 集成 log4j2 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -62,19 +89,8 @@
         <dependency>
             <groupId>com.spring4all</groupId>
             <artifactId>swagger-spring-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-models</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        <!-- pom.xml中强制指定swagger-models版本 -->
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>1.5.22</version>
-        </dependency>
+
 
     </dependencies>
 

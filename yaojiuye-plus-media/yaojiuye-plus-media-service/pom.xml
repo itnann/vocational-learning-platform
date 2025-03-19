@@ -3,18 +3,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>yaojiuye-plus-system</artifactId>
+        <artifactId>yaojiuye-plus-media</artifactId>
         <groupId>com.yaojiuye</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>yaojiuye-plus-system-service</artifactId>
-    <name>yaojiuye-plus-system-service</name>
-    <description>yaojiuye-plus-system-service</description>
+    <artifactId>yaojiuye-plus-media-service</artifactId>
+    <name>yaojiuye-plus-media-service</name>
+    <description>yaojiuye-plus-media-service</description>
 
     <dependencies>
         <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.yaojiuye</groupId>
-            <artifactId>yaojiuye-plus-system-model</artifactId>
+            <artifactId>yaojiuye-plus-media-model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -29,16 +33,6 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-
-        <!--cloud的基础环境包-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-context</artifactId>
         </dependency>
         <!-- Spring Boot 集成 Junit -->
         <dependency>

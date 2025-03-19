@@ -1,2 +1,2 @@
 ###
-GET {{system_host}}/system/dictionary/all
+GET {{gateway_host}}/system/dictionary/all

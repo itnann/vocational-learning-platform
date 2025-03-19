@@ -1,11 +1,11 @@
 #server:
 #  servlet:
-#    context-path: /content
-#  port: 63040
+#    context-path: /system
+#  port: 63110
 #微服务配置
 spring:
   application:
-    name: content-service # nacos服务名称
+    name: system-service #nacos服务名称
   profiles:
     active: dev
   cloud:
@@ -19,10 +19,9 @@ spring:
 
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://192.168.101.65:3306/yaojiuye_content?serverTimezone=UTC&userUnicode=true&useSSL=false
+#    url: jdbc:mysql://192.168.101.65:3306/yaojiuye_system?serverTimezone=UTC&userUnicode=true&useSSL=false&
 #    username: root
 #    password: mysql
-
 # 日志文件配置路径
 #logging:
 #  config: classpath:log4j2-dev.xml
