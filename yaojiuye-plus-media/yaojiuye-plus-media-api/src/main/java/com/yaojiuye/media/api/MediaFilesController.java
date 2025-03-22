@@ -3,14 +3,19 @@ package com.yaojiuye.media.api;
 import com.yaojiuye.base.model.PageParams;
 import com.yaojiuye.base.model.PageResult;
 import com.yaojiuye.media.model.dto.QueryMediaParamsDto;
+import com.yaojiuye.media.model.dto.UploadFileParamsDto;
+import com.yaojiuye.media.model.dto.UploadFileResultDto;
 import com.yaojiuye.media.model.po.MediaFiles;
 import com.yaojiuye.media.service.MediaFileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author itnan
@@ -31,6 +36,32 @@ public class MediaFilesController {
     public PageResult<MediaFiles> list(PageParams pageParams, @RequestBody QueryMediaParamsDto queryMediaParamsDto) {
         Long companyId = 1232141425L;
         return mediaFileService.queryMediaFiels(companyId, pageParams, queryMediaParamsDto);
+
+    }
+
+    @ApiOperation("上传文件")
+    @RequestMapping(value = "/upload/coursefile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public UploadFileResultDto upload(@RequestPart("filedata") MultipartFile filedata) throws IOException {
+        Long companyId = 1232141425L;
+        UploadFileParamsDto uploadFileParamsDto = new UploadFileParamsDto();
+        //文件大小
+        uploadFileParamsDto.setFileSize(filedata.getSize());
+        //图片
+        uploadFileParamsDto.setFileType("001001");
+        //文件名称
+        uploadFileParamsDto.setFilename(filedata.getOriginalFilename());//文件名称
+        //文件大小
+        long fileSize = filedata.getSize();
+        uploadFileParamsDto.setFileSize(fileSize);
+        //创建临时文件
+        File tempFile = File.createTempFile("minio", "temp");
+        //上传的文件拷贝到临时文件
+        filedata.transferTo(tempFile);
+        //文件路径
+        String absolutePath = tempFile.getAbsolutePath();
+        //上传文件
+        UploadFileResultDto uploadFileResultDto = mediaFileService.uploadFile(companyId, uploadFileParamsDto, absolutePath);
+        return uploadFileResultDto;
 
     }
 

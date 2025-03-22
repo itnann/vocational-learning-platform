@@ -2,6 +2,7 @@ package com.yaojiuye.media.model.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("media_files")
+//@Accessors(chain = true)
 public class MediaFiles implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,7 +24,7 @@ public class MediaFiles implements Serializable {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    @TableId(value = "id", type = IdType.INPUT)
     private String id;
 
     /**
