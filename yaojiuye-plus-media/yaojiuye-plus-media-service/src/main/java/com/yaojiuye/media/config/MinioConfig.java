@@ -28,7 +28,6 @@ public class MinioConfig {
 
     @Bean
     public MinioClient minioClient() {
-
         MinioClient minioClient =
                 MinioClient.builder()
                         .endpoint(endpoint)
@@ -36,4 +35,5 @@ public class MinioConfig {
                         .build();
         return minioClient;
     }
+
 }

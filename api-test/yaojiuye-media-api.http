@@ -7,3 +7,6 @@ Content-Disposition: form-data; name="filedata"; filename="3.jpg"
 Content-Type: application/octet-stream
 
 < G:/code_tzn/3.png
+
+###
+POST {{media_host}}/media/upload/mergechunks/?fileMd5=61f227da62a46afe3cc134da10a3872e&fileName=Day1-00.项目导学.mp4&chunkTotal=5
