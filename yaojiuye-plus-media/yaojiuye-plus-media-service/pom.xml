@@ -69,9 +69,16 @@
             <version>4.8.1</version>
         </dependency>
 
+        <!--动态代理和自定义注解使用的aop依赖 -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
+        </dependency>
+
+        <!--分布式定时任务xxl-job -->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
         </dependency>
 
 

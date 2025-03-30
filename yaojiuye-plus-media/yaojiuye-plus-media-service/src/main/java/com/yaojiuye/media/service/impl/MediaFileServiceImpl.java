@@ -9,10 +9,12 @@ import com.yaojiuye.base.model.PageParams;
 import com.yaojiuye.base.model.PageResult;
 import com.yaojiuye.base.model.RestResponse;
 import com.yaojiuye.media.mapper.MediaFilesMapper;
+import com.yaojiuye.media.mapper.MediaProcessMapper;
 import com.yaojiuye.media.model.dto.QueryMediaParamsDto;
 import com.yaojiuye.media.model.dto.UploadFileParamsDto;
 import com.yaojiuye.media.model.dto.UploadFileResultDto;
 import com.yaojiuye.media.model.po.MediaFiles;
+import com.yaojiuye.media.model.po.MediaProcess;
 import com.yaojiuye.media.service.MediaFileService;
 import io.minio.*;
 import io.minio.messages.DeleteError;
@@ -45,7 +47,6 @@ import java.util.stream.Stream;
  * @author itnan
  * @version 1.0
  * @description minio的默认分块大戏为5mb,springboot种tomcat的默认最大请求体为1mb,所以这里需要设分块大小为5mb
- * @date 2022/07/04 15:06
  * @since 1.0
  */
 @Service
@@ -58,6 +59,8 @@ public class MediaFileServiceImpl implements MediaFileService {
     private final MinioClient minioClient;
 
     private final MediaFilesMapper mediaFilesMapper;
+
+    private final MediaProcessMapper mediaProcessMapper;
 
     //@Value("${minio.bucket.files}")
     private String files;
@@ -149,11 +152,32 @@ public class MediaFileServiceImpl implements MediaFileService {
                 log.error("保存文件信息到数据库失败,{}", mediaFiles.toString());
                 GlobalException.cast("保存文件信息失败");
             }
+            //添加到待处理任务表 事务方法调用非事务方法受事务控制
+            addWaitingTask(mediaFiles);
             log.debug("保存文件信息到数据库成功,{}", mediaFiles.toString());
+
 
         }
         return mediaFiles;
+    }
 
+    /**
+     * 添加待处理任务
+     * @param mediaFiles 媒资文件信息
+     */
+    private void addWaitingTask(MediaFiles mediaFiles){
+        String filename = mediaFiles.getFilename();
+        String extension = filename.substring(filename.lastIndexOf("."));
+        String mimeType = getMimeType(extension);
+        //如果是avi视频添加到视频待处理表
+        if(mimeType.equals("video/x-msvideo")){
+            MediaProcess mediaProcess = new MediaProcess();
+            BeanUtils.copyProperties(mediaFiles,mediaProcess, "id", "url");
+            mediaProcess.setStatus("1");//状态是未未处理
+            mediaProcess.setCreateDate(LocalDateTime.now());
+            mediaProcess.setFailCount(0);//失败次数默认为0
+            mediaProcessMapper.insert(mediaProcess);
+        }
     }
 
     private String getMimeType(String extension) {
@@ -393,7 +417,7 @@ public class MediaFileServiceImpl implements MediaFileService {
         File minioFile = null;
         FileOutputStream outputStream = null;
         try {
-            InputStream stream = minioClient.getObject(GetObjectArgs.builder()
+           InputStream stream = minioClient.getObject(GetObjectArgs.builder()
                     .bucket(bucket)
                     .object(objectName)
                     .build());

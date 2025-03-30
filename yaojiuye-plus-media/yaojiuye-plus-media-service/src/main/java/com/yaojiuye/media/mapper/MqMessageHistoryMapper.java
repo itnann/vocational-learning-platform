@@ -8,7 +8,7 @@ import com.yaojiuye.media.model.po.MqMessageHistory;
  *  Mapper 接口
  * </p>
  *
- * @author itcast
+ * @author itnan
  */
 public interface MqMessageHistoryMapper extends BaseMapper<MqMessageHistory> {
 

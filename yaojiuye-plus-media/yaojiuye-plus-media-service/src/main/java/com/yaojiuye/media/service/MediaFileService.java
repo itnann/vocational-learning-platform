@@ -8,6 +8,8 @@ import com.yaojiuye.media.model.dto.UploadFileParamsDto;
 import com.yaojiuye.media.model.dto.UploadFileResultDto;
 import com.yaojiuye.media.model.po.MediaFiles;
 
+import java.io.File;
+
 /**
  * @author itnan
  * @version 1.0
@@ -82,4 +84,22 @@ public interface MediaFileService {
      * @author itnan
      */
     public RestResponse mergechunks(Long companyId,String fileMd5,int chunkTotal,UploadFileParamsDto uploadFileParamsDto);
+
+    /**
+     * 将minio文件下载到本地服务器
+     * @param bucket
+     * @param objectName
+     * @return
+     */
+    public File downloadFileFromMinIO(String bucket, String objectName);
+
+    /**
+     * @description 上传文件到minio
+     * @param localFilePath
+     * @param mimeType
+     * @param bucket
+     * @param objectName
+     * @return
+     */
+    public boolean addMediaFilesToMinIO(String localFilePath, String mimeType, String bucket, String objectName);
 }
