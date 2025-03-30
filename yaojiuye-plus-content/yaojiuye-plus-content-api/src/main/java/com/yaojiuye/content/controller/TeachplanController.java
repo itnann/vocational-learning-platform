@@ -1,7 +1,9 @@
 package com.yaojiuye.content.controller;
 
+import com.yaojiuye.content.model.dto.BindTeachplanMediaDto;
 import com.yaojiuye.content.model.dto.SaveTeachplanDto;
 import com.yaojiuye.content.model.dto.TeachplanDto;
+import com.yaojiuye.content.service.ITeachplanMediaService;
 import com.yaojiuye.content.service.ITeachplanService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -24,6 +26,8 @@ import java.util.List;
 public class TeachplanController {
 
     private final ITeachplanService teachplanService;
+
+    private final ITeachplanMediaService teachplanMediaService;
 
     /**
      * 根据课程id查询课程计划
@@ -64,4 +68,17 @@ public class TeachplanController {
     public void movedown(@PathVariable Long id){
         teachplanService.movedown(id);
     }
+
+    @ApiOperation(value = "课程计划和媒资信息绑定")
+    @PostMapping("/teachplan/association/media")
+    public void associationMedia(@RequestBody BindTeachplanMediaDto bindTeachplanMediaDto){
+            teachplanMediaService.associationMedia(bindTeachplanMediaDto);
+    }
+
+    @ApiOperation("课程计划和媒资信息绑定解绑")
+    @DeleteMapping("/teachplan/association/media/{teachPlanId}/{mediaId}")
+    public void unassociationMedia(@PathVariable("teachPlanId") Long teachPlanId,@PathVariable("mediaId") String mediaId){
+        teachplanMediaService.unassociationMedia(teachPlanId,mediaId);
+    }
+
 }

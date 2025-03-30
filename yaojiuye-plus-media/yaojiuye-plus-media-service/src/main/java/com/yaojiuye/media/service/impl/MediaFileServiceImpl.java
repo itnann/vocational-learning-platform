@@ -73,8 +73,11 @@ public class MediaFileServiceImpl implements MediaFileService {
     public PageResult<MediaFiles> queryMediaFiels(Long companyId, PageParams pageParams, QueryMediaParamsDto queryMediaParamsDto) {
 
         //构建查询条件对象
-        LambdaQueryWrapper<MediaFiles> queryWrapper = new LambdaQueryWrapper<>();
-
+        LambdaQueryWrapper<MediaFiles> queryWrapper = new LambdaQueryWrapper<MediaFiles>()
+                .eq(StringUtils.isNotBlank(String.valueOf(companyId)), MediaFiles::getCompanyId, companyId)
+                .eq(StringUtils.isNotBlank(queryMediaParamsDto.getAuditStatus()), MediaFiles::getAuditStatus, queryMediaParamsDto.getAuditStatus())
+                .eq(StringUtils.isNotBlank(queryMediaParamsDto.getFileType()), MediaFiles::getFileType, queryMediaParamsDto.getFileType())
+                .like(StringUtils.isNotBlank(queryMediaParamsDto.getFilename()), MediaFiles::getFilename,  queryMediaParamsDto.getFilename());
         //分页对象
         Page<MediaFiles> page = pageParams.toMpPage();
         // 查询数据内容获得结果
