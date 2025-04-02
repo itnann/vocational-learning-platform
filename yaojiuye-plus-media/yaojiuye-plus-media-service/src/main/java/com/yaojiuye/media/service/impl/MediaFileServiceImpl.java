@@ -240,6 +240,18 @@ public class MediaFileServiceImpl implements MediaFileService {
     }
 
     /**
+     * 根据文件id查询文件信息
+     *
+     * @param mediaId
+     * @return
+     */
+    @Override
+    public MediaFiles getFileById(String mediaId) {
+        MediaFiles mediaFiles = mediaFilesMapper.selectById(mediaId);
+        return mediaFiles;
+    }
+
+    /**
      * @param fileMd5 文件的md5
      * @return com.yaojiuye.base.model.RestResponse<java.lang.Boolean> false不存在，true存在
      * @description 检查文件是否存在

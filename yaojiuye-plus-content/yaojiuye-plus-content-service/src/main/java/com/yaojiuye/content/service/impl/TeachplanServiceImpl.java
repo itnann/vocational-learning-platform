@@ -84,11 +84,16 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
      */
     private Integer getTeachplanCount(Long courseId, Long parentId) {
         //获取courseId和parentId相同的他们中orderby字段最大的值 ,返回它的字段值
-        return lambdaQuery().eq(Teachplan::getCourseId, courseId)
+        Teachplan teachplan = lambdaQuery().eq(Teachplan::getCourseId, courseId)
                 .eq(Teachplan::getParentid, parentId)
                 .orderByDesc(Teachplan::getOrderby)
                 .last("limit 1")
-                .one().getOrderby();
+                .one();
+        if (teachplan == null) {
+            return 0;
+        }
+
+        return teachplan.getOrderby();
     }
 
     @Override
