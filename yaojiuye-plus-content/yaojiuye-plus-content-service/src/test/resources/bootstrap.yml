@@ -11,11 +11,18 @@ spring:
   cloud:
     nacos:
       server-addr: 192.168.101.65:8848
+      discovery:   #  使用feign远程调用media-api服务,需要注册和发现
+        namespace: dev_yaojiuye
+        group: yaojiuye-plus-project
       config: # nacos配置文件相关配置
         namespace: dev_yaojiuye
         group: yaojiuye-plus-project
         file-extension: yaml
         refresh-enabled: true
+        shared-configs:
+        - data-id: feign-${spring.profiles.active}.yaml
+          group: yaojiuye-plus-common
+          refresh: true
 
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver

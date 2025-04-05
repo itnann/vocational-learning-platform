@@ -1,10 +1,13 @@
 package com.yaojiuye.content.controller;
 
 import com.yaojiuye.content.service.CoursePublishService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -14,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @Date 2025/4/1 20:51
  * @Version V1.0
  */
-@Controller
+@Controller //有返回的页面ModelAndView,不能加@ResponseBody
 @RequiredArgsConstructor
 public class CoursePublishController {
 
@@ -27,5 +30,20 @@ public class CoursePublishController {
         modelAndView.addObject("model",coursePublishService.getCoursePreviewInfo(courseId));
         modelAndView.setViewName("course_template");
         return modelAndView;
+    }
+
+    @ResponseBody
+    @PostMapping("/courseaudit/commit/{courseId}")
+    public void commitAudit(@PathVariable("courseId") Long courseId){
+        long companyId = 1232141425L;
+        coursePublishService.commitAudit(companyId, courseId);
+    }
+
+    @ApiOperation("课程发布")
+    @ResponseBody
+    @PostMapping ("/coursepublish/{courseId}")
+    public void coursepublish(@PathVariable("courseId") Long courseId){
+        long companyId = 1232141425L;
+        coursePublishService.publish(companyId, courseId);
     }
 }

@@ -72,7 +72,7 @@ public class VideoTask {
                 String fileId = mediaProcess.getFileId();
                 //获取任务id
                 long taskId = mediaProcess.getId();
-                //开始处理任务
+                //开始处理任务  乐观算 抢锁
                 boolean startTask = mediaFileProcessService.startTask(taskId);
                 if (!startTask) {
                     log.debug("抢占任务失败,任务Id:{}", taskId);
@@ -118,7 +118,7 @@ public class VideoTask {
                     log.debug("上传文件失败,文件路径:{}", mp4_path + mp4_name);
                     mediaFileProcessService.saveProcessFinishStatus(taskId, "3", fileId, null, "上传文件失败");
                 }
-                mediaFileProcessService.saveProcessFinishStatus(taskId, "2", fileId, bucket + "/" + minio_path, null);
+                mediaFileProcessService.saveProcessFinishStatus(taskId, "2", fileId, "/" + bucket + "/" + minio_path, null);
 
             }finally {
                     countDownLatch.countDown();

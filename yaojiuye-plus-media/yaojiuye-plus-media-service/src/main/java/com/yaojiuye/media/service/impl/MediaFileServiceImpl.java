@@ -98,7 +98,7 @@ public class MediaFileServiceImpl implements MediaFileService {
      * @return 文件信息
      */
     @Override
-    public UploadFileResultDto uploadFile(Long companyId, UploadFileParamsDto uploadFileParamsDto, String localFilePath) {
+    public UploadFileResultDto uploadFile(Long companyId, UploadFileParamsDto uploadFileParamsDto, String localFilePath, String objectName) {
         //文件名
         String filename = uploadFileParamsDto.getFilename();
         //拿到扩展名
@@ -107,7 +107,9 @@ public class MediaFileServiceImpl implements MediaFileService {
         String mimeType = getMimeType(extension);
         // 将文件上传到minio
         String fileMd5 = getFileMd5(new File(localFilePath));//临时文件为了获取文件的md5值
-        String objectName = getDefaultFolderPath() + fileMd5 + extension;
+        if(StringUtils.isBlank(objectName)){
+            objectName = getDefaultFolderPath() + fileMd5 + extension;
+        }
         boolean result = addMediaFilesToMinIO(localFilePath, mimeType, files, objectName);
         if (!result) {
             GlobalException.cast("上传文件失败");

@@ -4,6 +4,7 @@ import com.spring4all.swagger.EnableSwagger2Doc;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * [内容管理服务启动类]
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableSwagger2Doc
 @SpringBootApplication
 @Slf4j
+@EnableFeignClients(basePackages={"com.yaojiuye.content.feignclient"})
 public class ContentApplication {
     public static void main(String[] args) {
         SpringApplication.run(ContentApplication.class, args);
