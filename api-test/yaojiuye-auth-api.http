@@ -1,0 +1,13 @@
+### 授权码模式
+### http://localhost:63070/auth/login 登录
+### 第一步申请授权码(浏览器请求)http://localhost:63070/auth/oauth/authorize?client_id=XcWebApp&response_type=code&scope=all&redirect_uri=http://www.yaojiuye.cn
+### 第二步申请令牌
+POST {{auth_host}}/auth/oauth/token?client_id=XcWebApp&client_secret=XcWebApp&grant_type=authorization_code&code=vq5PBl&redirect_uri=http://www.yaojiuye.cn
+
+### 这种模式十分简单，但是却意味着直接将用户敏感信息泄漏给了client，因此这就说明这种模式只能用于client是我们自己开发的情况下。
+POST {{auth_host}}/auth/oauth/token?client_id=XcWebApp&client_secret=XcWebApp&grant_type=password&username={"username":"t1", "password":"111111", "authType":"password"}
+
+### 通过演示授权码模式和密码模式，授权码模式适合客户端和认证服务非同一个系统的情况，所以本项目使用授权码模式完成微信扫码认证。本项目采用密码模式作为前端请求微服务的认证方式。
+
+###校验jwt令牌
+POST {{auth_host}}/auth/oauth/check_token?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsieWFvaml1eWUiXSwidXNlcl9uYW1lIjoie1wiY29tcGFueUlkXCI6XCIxMjMyMTQxNDI1XCIsXCJjcmVhdGVUaW1lXCI6XCIyMDIyLTA5LTI4VDA4OjMyOjAzXCIsXCJpZFwiOlwiNTJcIixcIm5hbWVcIjpcIk3ogIHluIhcIixcInNleFwiOlwiMVwiLFwic3RhdHVzXCI6XCJcIixcInVzZXJuYW1lXCI6XCJ0MVwiLFwidXR5cGVcIjpcIjEwMTAwMlwifSIsInNjb3BlIjpbImFsbCJdLCJleHAiOjE3NDQwMDIyNzMsImF1dGhvcml0aWVzIjpbInRlc3QiXSwianRpIjoiMzdjOThlYmYtZDY1Yi00ZTgzLWI1YTUtMDQ3MWE1NGFmZjJjIiwiY2xpZW50X2lkIjoiWGNXZWJBcHAifQ.RspkXPtKGQsyrlfhlKHsXAWuFnfrxjmdpNbKrbZJc54

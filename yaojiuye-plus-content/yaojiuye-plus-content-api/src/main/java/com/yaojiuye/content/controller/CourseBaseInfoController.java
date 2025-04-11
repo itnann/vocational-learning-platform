@@ -9,9 +9,11 @@ import com.yaojiuye.content.model.dto.EditCourseDto;
 import com.yaojiuye.content.model.dto.QueryCourseParamsDto;
 import com.yaojiuye.content.model.po.CourseBase;
 import com.yaojiuye.content.service.ICourseBaseService;
+import com.yaojiuye.content.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
