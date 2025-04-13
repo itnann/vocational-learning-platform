@@ -1,11 +1,13 @@
-package com.yaojiuye.content.util;
+package com.yaojiuye.media.util;
 
 import com.alibaba.fastjson.JSON;
+import io.jsonwebtoken.Claims;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
-
+import io.jsonwebtoken.Jwts;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 /**
@@ -15,6 +17,8 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 public class SecurityUtil {
+
+    private static String SIGNING_KEY = "itnan";
 
     public static XcUser getUser() {
         try {
@@ -32,6 +36,18 @@ public class SecurityUtil {
         }
         return null;
     }
+
+    public static XcUser getUserJwt(String jwt) {
+        // 得到DefaultJwtParser
+        Claims claims = Jwts.parser()
+                // 设置签名的秘钥
+                .setSigningKey(SIGNING_KEY.getBytes(StandardCharsets.UTF_8))
+                // 设置需要解析的jwt
+                .parseClaimsJws(jwt).getBody();
+        XcUser user = JSON.parseObject(claims.get("user_name").toString(), XcUser.class);
+        return user;
+    }
+
 
     /**
      * 内部类

@@ -1,8 +1,10 @@
 package com.yaojiuye.content.controller;
 
 import com.yaojiuye.content.service.CoursePublishService;
+import com.yaojiuye.content.util.SecurityUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +37,11 @@ public class CoursePublishController {
     @ResponseBody
     @PostMapping("/courseaudit/commit/{courseId}")
     public void commitAudit(@PathVariable("courseId") Long courseId){
-        long companyId = 1232141425L;
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        Long companyId = null;
+        if(StringUtils.isNotEmpty(user.getCompanyId())){
+            companyId = Long.valueOf(user.getCompanyId());
+        }
         coursePublishService.commitAudit(companyId, courseId);
     }
 
@@ -43,7 +49,11 @@ public class CoursePublishController {
     @ResponseBody
     @PostMapping ("/coursepublish/{courseId}")
     public void coursepublish(@PathVariable("courseId") Long courseId){
-        long companyId = 1232141425L;
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        Long companyId = null;
+        if(StringUtils.isNotEmpty(user.getCompanyId())){
+            companyId = Long.valueOf(user.getCompanyId());
+        }
         coursePublishService.publish(companyId, courseId);
     }
 }

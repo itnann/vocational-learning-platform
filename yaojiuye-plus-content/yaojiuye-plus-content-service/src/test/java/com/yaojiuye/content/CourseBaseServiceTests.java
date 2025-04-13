@@ -36,7 +36,7 @@ public class CourseBaseServiceTests {
         QueryCourseParamsDto queryCourseParamsDto = new QueryCourseParamsDto();
         queryCourseParamsDto.setCourseName("java");
         queryCourseParamsDto.setAuditStatus("202004");
-        PageResult<CourseBase> courseBasePageResult = courseBaseService.queryCourseBaseList(new PageParams(), queryCourseParamsDto);
+        PageResult<CourseBase> courseBasePageResult = courseBaseService.queryCourseBaseList(1_232_141_425L,new PageParams(), queryCourseParamsDto);
         Assertions.assertNotNull(courseBasePageResult);
 
     }

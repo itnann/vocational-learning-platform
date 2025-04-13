@@ -3,10 +3,12 @@ package com.yaojiuye.checkcode.controller;
 import com.yaojiuye.checkcode.model.CheckCodeParamsDto;
 import com.yaojiuye.checkcode.model.CheckCodeResultDto;
 import com.yaojiuye.checkcode.service.CheckCodeService;
+import com.yaojiuye.checkcode.service.SendCheckCodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,6 +25,9 @@ public class CheckCodeController {
 
     @Resource(name = "PicCheckCodeService")
     private CheckCodeService picCheckCodeService;
+
+    @Autowired
+    private SendCheckCodeService sendCheckCodeService;
 
 
     @ApiOperation(value="生成验证信息", notes="生成验证信息")
@@ -41,5 +46,10 @@ public class CheckCodeController {
     public Boolean verify(String key, String code){
         Boolean isSuccess = picCheckCodeService.verify(key,code);
         return isSuccess;
+    }
+
+    @PostMapping("/phone")
+    public CheckCodeResultDto generatePhoneCheckCode(CheckCodeParamsDto checkCodeParamsDto){
+        return  sendCheckCodeService.sendCheckCodeByPhone(checkCodeParamsDto);
     }
 }

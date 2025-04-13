@@ -57,15 +57,17 @@ public class CourseBaseServiceImpl extends ServiceImpl<CourseBaseMapper, CourseB
      *
      * @param pageParams
      * @param queryCourseParamsDto
+     * @param companyId 培训机构id
      * @return
      */
     @Override
-    public PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto) {
+    public PageResult<CourseBase> queryCourseBaseList(Long companyId, PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto) {
         QueryWrapper<CourseBase> wrapper = new QueryWrapper();
         wrapper.lambda()
                 .like(StringUtils.isNotEmpty(queryCourseParamsDto.getCourseName()), CourseBase::getName, queryCourseParamsDto.getCourseName())
                 .eq(StringUtils.isNotEmpty(queryCourseParamsDto.getAuditStatus()), CourseBase::getAuditStatus, queryCourseParamsDto.getAuditStatus())
-                .eq(StringUtils.isNotEmpty(queryCourseParamsDto.getPublishStatus()), CourseBase::getStatus, queryCourseParamsDto.getPublishStatus());
+                .eq(StringUtils.isNotEmpty(queryCourseParamsDto.getPublishStatus()), CourseBase::getStatus, queryCourseParamsDto.getPublishStatus())
+                .eq(CourseBase::getCompanyId, companyId);
         Page<CourseBase> page = pageParams.toMpPage();
         Page<CourseBase> courseBasePage = courseBaseMapper.selectPage(page, wrapper);
         PageResult<CourseBase> pageResult = PageResult.po2Po(courseBasePage);

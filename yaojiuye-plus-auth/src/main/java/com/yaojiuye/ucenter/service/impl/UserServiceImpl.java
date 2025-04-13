@@ -2,8 +2,10 @@ package com.yaojiuye.ucenter.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.yaojiuye.ucenter.mapper.XcMenuMapper;
 import com.yaojiuye.ucenter.model.dto.AuthParamsDto;
 import com.yaojiuye.ucenter.model.dto.XcUserExt;
+import com.yaojiuye.ucenter.model.po.XcMenu;
 import com.yaojiuye.ucenter.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author itnan
@@ -27,6 +33,9 @@ public class UserServiceImpl implements UserDetailsService {
 
     @Autowired  //Spring的IOC容器
     ApplicationContext applicationContext;
+
+    @Autowired
+    XcMenuMapper xcMenuMapper;
 
     //传入请求认证的参数就是AuthParamsDto 只不过是json串
     @Override
@@ -56,7 +65,16 @@ public class UserServiceImpl implements UserDetailsService {
      */
     public UserDetails getUserPrincipal(XcUserExt user){
         //用户权限,如果不加报Cannot pass a null GrantedAuthority collection
-        String[] authorities = {"p1"};
+        String[] authorities = {""};
+        List<XcMenu> xcMenus = xcMenuMapper.selectPermissionByUserId(user.getId());
+        if(!CollectionUtils.isEmpty(xcMenus)){
+            List<String> permissions = new ArrayList<>();
+            xcMenus.forEach(xcMenu -> {
+                //拿到用户拥有的权限标识符
+                permissions.add(xcMenu.getCode());
+            });
+            authorities = permissions.toArray(new String[0]);
+        }
         String password = "";
         //为了安全在令牌中不放密码
         user.setPassword(null);

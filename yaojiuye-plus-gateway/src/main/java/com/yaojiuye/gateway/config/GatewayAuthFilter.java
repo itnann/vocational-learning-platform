@@ -101,7 +101,11 @@ public class GatewayAuthFilter implements GlobalFilter, Ordered {
     private String getToken(ServerWebExchange exchange) {
         String tokenStr = exchange.getRequest().getHeaders().getFirst("Authorization");
         if (StringUtils.isBlank(tokenStr)) {
-            return null;
+            //cookie中获取jwt的值
+            tokenStr = "Bearer " + exchange.getRequest().getCookies().getFirst("jwt").getValue();
+            if (StringUtils.isBlank(tokenStr)) {
+                return null;
+            }
         }
         String token = tokenStr.split(" ")[1];
         if (StringUtils.isBlank(token)) {

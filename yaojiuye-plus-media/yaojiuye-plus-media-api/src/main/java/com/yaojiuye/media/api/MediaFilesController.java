@@ -1,5 +1,6 @@
 package com.yaojiuye.media.api;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import com.yaojiuye.base.model.PageParams;
 import com.yaojiuye.base.model.PageResult;
 import com.yaojiuye.media.model.dto.QueryMediaParamsDto;
@@ -7,8 +8,10 @@ import com.yaojiuye.media.model.dto.UploadFileParamsDto;
 import com.yaojiuye.media.model.dto.UploadFileResultDto;
 import com.yaojiuye.media.model.po.MediaFiles;
 import com.yaojiuye.media.service.MediaFileService;
+import com.yaojiuye.media.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 /**
  * @author itnan
@@ -34,7 +38,11 @@ public class MediaFilesController {
     @ApiOperation("媒资列表查询接口")
     @PostMapping("/files")
     public PageResult<MediaFiles> list(PageParams pageParams, @RequestBody QueryMediaParamsDto queryMediaParamsDto) {
-        Long companyId = 1232141425L;
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        Long companyId = null;
+        if(StringUtils.isNotEmpty(user.getCompanyId())){
+            companyId = Long.valueOf(user.getCompanyId());
+        }
         return mediaFileService.queryMediaFiels(companyId, pageParams, queryMediaParamsDto);
 
     }
@@ -42,8 +50,17 @@ public class MediaFilesController {
     @ApiOperation("上传文件")
     @RequestMapping(value = "/upload/coursefile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public UploadFileResultDto upload(@RequestPart("filedata") MultipartFile filedata,
-                                      @RequestParam(value= "objectName",required=false) String objectName) throws IOException {
-        Long companyId = 1232141425L;
+                                      @RequestParam(value= "objectName",required=false) String objectName,
+                                      @RequestParam(value= "companyIdFeign",required = false) String companyIdFeign ,
+                                      @CookieValue(name = "jwt", defaultValue = "") String jwt) throws IOException {
+        SecurityUtil.XcUser user = null;
+        Long companyId = null;
+        if(StringUtils.isNotBlank(jwt)){
+             user = SecurityUtil.getUserJwt(jwt);
+             companyId = Long.valueOf(user.getCompanyId());
+        }else{
+            companyId = Long.valueOf(companyIdFeign);
+        }
         UploadFileParamsDto uploadFileParamsDto = new UploadFileParamsDto();
         //文件大小
         uploadFileParamsDto.setFileSize(filedata.getSize());

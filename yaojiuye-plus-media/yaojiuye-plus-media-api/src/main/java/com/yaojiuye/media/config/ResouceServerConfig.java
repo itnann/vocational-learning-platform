@@ -1,4 +1,4 @@
-package com.yaojiuye.content.config;
+package com.yaojiuye.media.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

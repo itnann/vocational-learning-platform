@@ -13,6 +13,8 @@ import com.yaojiuye.content.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,17 +35,25 @@ public class CourseBaseInfoController {
     private final ICourseBaseService courseBaseService;
 
     @ApiOperation("课程分页查询接口")
+    @PreAuthorize("hasAuthority('xc_teachmanager_course_list')")
     @PostMapping("/course/list")
     public PageResult<CourseBase> list(PageParams pageParams, @RequestBody(required = false) QueryCourseParamsDto queryCourseParams){
-        return courseBaseService.queryCourseBaseList(pageParams, queryCourseParams);
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        Long companyId = null;
+        if(StringUtils.isNotEmpty(user.getCompanyId())){
+            companyId = Long.valueOf(user.getCompanyId());
+        }
+        return courseBaseService.queryCourseBaseList(companyId, pageParams, queryCourseParams);
     }
 
     @ApiOperation("新增课程基本信息")
     @PostMapping("/course")
     public CourseBaseInfoDto createCourseBase(@RequestBody @Validated(ValidationGroups.Inster.class) AddCourseDto addCourseDto){
-        //机构id，由于认证系统没有上线暂时硬编码
-        //TODO 获取当前机构id
-        Long companyId = 1232141425L;
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        Long companyId = null;
+        if(StringUtils.isNotEmpty(user.getCompanyId())){
+            companyId = Long.valueOf(user.getCompanyId());
+        }
         return courseBaseService.createCourseBase(companyId,addCourseDto);
     }
 
@@ -56,9 +66,11 @@ public class CourseBaseInfoController {
     @ApiOperation("修改课程基本信息")
     @PutMapping("/course")
     public CourseBaseInfoDto modifyCourseBase(@RequestBody @Validated(ValidationGroups.Update.class)EditCourseDto editCourseDto){
-        //机构id，由于认证系统没有上线暂时硬编码
-        //TODO 获取当前机构id
-        Long companyId = 1232141425L;
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        Long companyId = null;
+        if(StringUtils.isNotEmpty(user.getCompanyId())){
+            companyId = Long.valueOf(user.getCompanyId());
+        }
         return courseBaseService.updateCourseBase(companyId,editCourseDto);
     }
 

@@ -25,7 +25,7 @@ public class MediaServiceClientFallbackFactory implements FallbackFactory<MediaS
             }
         };
     }*/
-        return (MultipartFile upload, String objectName) -> {
+        return (MultipartFile upload, String objectName, String companyIdFeign) -> {
             log.error("远程调用媒资管理服务上传文件出错", throwable.toString(), throwable);
             return null;
         };

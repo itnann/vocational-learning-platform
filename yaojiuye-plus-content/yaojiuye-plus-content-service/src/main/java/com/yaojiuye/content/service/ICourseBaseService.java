@@ -25,7 +25,7 @@ public interface ICourseBaseService extends IService<CourseBase> {
      * @param queryCourseParamsDto
      * @return
      */
-    PageResult<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto);
+    PageResult<CourseBase> queryCourseBaseList(Long companyId, PageParams pageParams, QueryCourseParamsDto queryCourseParamsDto);
 
     /**
      * @description 添加课程基本信息

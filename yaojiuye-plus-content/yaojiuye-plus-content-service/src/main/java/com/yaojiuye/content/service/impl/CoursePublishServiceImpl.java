@@ -245,7 +245,9 @@ public class CoursePublishServiceImpl implements CoursePublishService {
     public void uploadCourseHtml(Long courseId, File file) {
 
         MultipartFile multipartFile = MultipartSupportConfig.getMultipartFile(file);
-        String s = mediaServiceClient.uploadFile(multipartFile, "course/" + courseId + ".html");
+        CourseBase courseBase = courseBaseInfoService.getById(courseId);
+        String companyIdFeign = String.valueOf(courseBase.getCompanyId());
+        String s = mediaServiceClient.uploadFile(multipartFile, "course/" + courseId + ".html", companyIdFeign);
         if (StringUtils.isEmpty(s)) {
             log.debug("远程调用熔断走的降级逻辑, 课程id: {}", courseId);
             GlobalException.cast("上传静态文件远程调用熔断走的降级逻辑");

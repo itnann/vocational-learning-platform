@@ -4,9 +4,11 @@ package com.yaojiuye.media.api;
 import com.yaojiuye.base.model.RestResponse;
 import com.yaojiuye.media.model.dto.UploadFileParamsDto;
 import com.yaojiuye.media.service.MediaFileService;
+import com.yaojiuye.media.util.SecurityUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,7 +61,11 @@ public class BigFilesController {
     public RestResponse mergechunks(@RequestParam("fileMd5") String fileMd5,
                                     @RequestParam("fileName") String fileName,
                                     @RequestParam("chunkTotal") int chunkTotal) throws Exception {
-        Long companyId = 1232141425L;
+        SecurityUtil.XcUser user = SecurityUtil.getUser();
+        Long companyId = null;
+        if(StringUtils.isNotEmpty(user.getCompanyId())){
+            companyId = Long.valueOf(user.getCompanyId());
+        }
 
         UploadFileParamsDto uploadFileParamsDto = new UploadFileParamsDto();
         uploadFileParamsDto.setFileType("001002");
