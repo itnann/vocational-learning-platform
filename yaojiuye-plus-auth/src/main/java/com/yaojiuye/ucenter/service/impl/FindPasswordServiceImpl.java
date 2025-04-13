@@ -72,7 +72,7 @@ public class FindPasswordServiceImpl implements FindPasswordService {
             GlobalException.cast("修改失败");
         }
         // 构建响应结果
-        return RestResponse.success("找回成功", "200");
+        return RestResponse.success("找回密码成功,2秒后返回登陆页面", "200");
 
     }
 }
