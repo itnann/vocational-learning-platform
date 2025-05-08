@@ -36,8 +36,7 @@ public class TeachplanMediaServiceImpl extends ServiceImpl<TeachplanMediaMapper,
      * @param bindTeachplanMediaDto
      * @return com.xuecheng.content.model.po.TeachplanMedia
      * @description 教学计划绑定媒资
-     * @author Mr.M
-     * @date 2022/9/14 22:20
+     * @author itnan
      */
     @Override
     public TeachplanMedia associationMedia(BindTeachplanMediaDto bindTeachplanMediaDto) {

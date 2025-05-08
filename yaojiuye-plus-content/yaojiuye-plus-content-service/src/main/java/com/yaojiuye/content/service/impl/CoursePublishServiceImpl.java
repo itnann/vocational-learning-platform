@@ -254,6 +254,12 @@ public class CoursePublishServiceImpl implements CoursePublishService {
         }
     }
 
+    @Override
+    public CoursePublish getCoursePublish(Long courseId) {
+        CoursePublish coursePublish = coursePublishService.lambdaQuery().eq(CoursePublish::getId, courseId).one();
+        return coursePublish;
+    }
+
     /**
      * @description 保存消息表记录
      * @param courseId  课程id

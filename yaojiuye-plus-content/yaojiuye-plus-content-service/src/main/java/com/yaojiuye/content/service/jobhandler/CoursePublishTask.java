@@ -52,7 +52,6 @@ public class CoursePublishTask extends MessageProcessAbstract {
      * @return boolean true:处理成功，false处理失败
      * @description 任务处理
      * @author itnan
-     * @date 2022/9/21 19:47
      */
     @Override
     public boolean execute(MqMessage mqMessage) {

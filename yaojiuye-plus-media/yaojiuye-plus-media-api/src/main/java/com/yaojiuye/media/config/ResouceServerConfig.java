@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
- * @author Mr.M
+ * @author itnan
  * @version 1.0
  * @description 资源服务配置
  * @date 2022/10/18 16:33

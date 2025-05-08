@@ -1,0 +1,3 @@
+###
+GET {{gateway_host}}/learning/mycoursetable
+

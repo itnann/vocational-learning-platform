@@ -88,6 +88,5 @@ public class RegisterServiceImpl implements RegisterService {
         xcUserRoleMapper.insert(xcUserRole);
         // 构建响应结果
         return RestResponse.success("注册成功,2秒后返回登陆页面", "200");
-
     }
 }

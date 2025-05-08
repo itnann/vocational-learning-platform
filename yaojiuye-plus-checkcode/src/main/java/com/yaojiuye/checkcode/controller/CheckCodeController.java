@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
- * @author Mr.M
+ * @author itnan
  * @version 1.0
  * @description 验证码服务接口
  * @date 2022/9/29 18:39

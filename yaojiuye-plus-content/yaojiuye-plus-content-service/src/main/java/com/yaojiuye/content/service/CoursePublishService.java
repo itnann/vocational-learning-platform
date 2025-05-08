@@ -1,6 +1,7 @@
 package com.yaojiuye.content.service;
 
 import com.yaojiuye.content.model.dto.CoursePreviewDto;
+import com.yaojiuye.content.model.po.CoursePublish;
 
 import java.io.File;
 
@@ -50,4 +51,6 @@ public interface CoursePublishService {
      * @author itnan
      */
     public void  uploadCourseHtml(Long courseId,File file);
+
+    public CoursePublish getCoursePublish(Long courseId);
 }

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 /**
- * @author Mr.M
+ * @author itnan
  * @version 1.0
  * @description 课程索引管理接口实现
  * @date 2022/9/25 7:23

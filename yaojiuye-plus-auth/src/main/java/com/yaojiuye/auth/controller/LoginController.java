@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author Mr.M
+ * @author itnan
  * @version 1.0
  * @description 测试controller
- * @date 2022/9/27 17:25
  */
 @Slf4j
 @RestController

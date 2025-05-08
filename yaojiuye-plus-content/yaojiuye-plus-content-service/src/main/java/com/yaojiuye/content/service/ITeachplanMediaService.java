@@ -18,8 +18,7 @@ public interface ITeachplanMediaService extends IService<TeachplanMedia> {
      * @description 教学计划绑定媒资
      * @param bindTeachplanMediaDto
      * @return com.xuecheng.content.model.po.TeachplanMedia
-     * @author Mr.M
-     * @date 2022/9/14 22:20
+     * @author itnan
      */
     public TeachplanMedia associationMedia(BindTeachplanMediaDto bindTeachplanMediaDto);
 

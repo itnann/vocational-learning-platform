@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 
 /**
  * @description 课程基本信息dto
- * @author Mr.M
- * @date 2022/9/7 17:44
+ * @author itnan
  * @version 1.0
  */
 @Data
