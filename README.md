@@ -1,4 +1,4 @@
-# Vocational Learning Platform
+<h1 align="center">Vocational Learning Platform</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Java-8-blue?style=for-the-badge" />
