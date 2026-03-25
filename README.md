@@ -190,7 +190,6 @@ vocational-learning-platform/
 └── README.md
 ```
 
-> The actual module names in your repository may vary. You can adjust this section to match the real directory structure after pushing all modules.
 
 ---
 
